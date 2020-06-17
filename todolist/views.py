@@ -5,7 +5,7 @@ from .models import Category, List
 
 # Create your views here.
 
-def index(request):
+def todolist(request):
     """Index"""
     lists = List.objects.filter(done_date__lte=timezone.now()).order_by('done_date')
     categories = Category.objects.all()
@@ -34,4 +34,4 @@ def index(request):
             for list_id in checked:
                 todo = List.objects.get(id=int(list_id))
                 todo.conclude()
-    return render(request, "index.html", {"lists" : lists}, {"categories" : categories})
+    return render(request, 'index.html', {'lists' : lists}, {'categories' : categories})
