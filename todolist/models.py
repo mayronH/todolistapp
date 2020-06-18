@@ -24,6 +24,10 @@ class List(models.Model):
     due_date = models.DateField(default=timezone.now)
     category = models.ForeignKey('todolist.Category', on_delete=models.CASCADE, default='general')
 
+    class Meta:
+        verbose_name = ("Tarefa")
+        verbose_name_plural = ("Tarefas")
+
     def conclude(self):
         """Conclui a tarefa"""
         self.done_date = timezone.now()
