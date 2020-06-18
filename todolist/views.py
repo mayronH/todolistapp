@@ -7,7 +7,8 @@ from .models import Category, List
 
 def todolist(request):
     """Index"""
-    lists = List.objects.filter(done_date__lte=timezone.now()).order_by('done_date')
+    list_conclude = List.objects.filter(done_date__lte=timezone.now()).order_by('done_date')
+    lists = List.objects.filter(done_date__isnull=True).order_by('created_date')
     categories = Category.objects.all()
 
     if request.method == "POST":
@@ -22,16 +23,17 @@ def todolist(request):
             return redirect("/")
 
         if "taskDelete" in request.POST:
-            checked = request.POST["checkbox"]
+            checked = request.POST.getlist("checktask")
 
             for list_id in checked:
                 todo = List.objects.get(id=int(list_id))
                 todo.delete()
 
         if "taskConclude" in request.POST:
-            checked = request.POST["checkbox"]
+            checked = request.POST.getlist("checktask")
 
             for list_id in checked:
                 todo = List.objects.get(id=int(list_id))
                 todo.conclude()
-    return render(request, 'index.html', {"lists": lists, "categories": categories})
+    return render(request, 'index.html', {"list_conclude": list_conclude,
+                                          "categories": categories, "lists": lists})
