@@ -1,4 +1,49 @@
 {% extends 'base.html' %}
-{% block content %} 
-
+{% block content %}
+<h1 class="text-center">To-do List</h1>
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+        <form id="todoform" class="row" action="" method="post">
+            {% csrf_token %}
+            <div class="col-lg-4 col-sm-12">
+                <label for="txtTitle">Título</label>
+                <input type="text" id="txtTitle" class="form-control" placeholder="Insira o título da tarefa"
+                    name="txtTitle" required>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <label for="optCategory">Categoria</label>
+                <select id="optCategory" class="form-control" name="optCategory">
+                    <option class="disabled" value="">Escolha uma categoria</option>
+                    {% for category in categories %}
+                    <option class="" value="{{ category.name }}" name="{{ category.name }}">{{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <label for="txtDate">Data limite</label>
+                <input type="date" id="txtDate" class="form-control" name="txtDate">
+            </div>
+            <div class="col-lg-12">
+                <label for="txtContent">Descrição</label>
+                <textarea id="txtContent" class="form-control" name="txtContent" row="10"></textarea>
+            </div>
+            <div class="container">
+                <div class="d-flex justify-content-center">
+                    <div class="p-2">
+                        <button class="taskAdd" name="taskAdd" type="submit"><i class="fas fa-plus icon"></i> Adicionar Tarefa</button>
+                    </div>
+                    <div class="p-2">
+                        <button class="taskDelete" name="taskDelete" formnovalidate="" type="submit"
+                        onclick="$('input#sublist').click();"><i class="far fa-trash-alt icon"></i> Deletar Tarefa</button>
+                    </div>
+                    <div class="p-2">
+                        <button class="taskConclude" name="taskConclude" formnovalidate="" type="submit"
+                        onclick="$('input#sublist').click();"><i class="fas fa-check icon"></i> Concluir Tarefa</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

@@ -12,10 +12,10 @@ def todolist(request):
 
     if request.method == "POST":
         if "taskAdd" in request.POST:
-            title = request.POST["title"]
-            category = request.POST["category_slide"]
-            content = request.POST["content"]
-            date = request.POST["date"]
+            title = request.POST["txtTitle"]
+            category = request.POST["optCategory"]
+            content = request.POST["txtContent"]
+            date = request.POST["txtDate"]
             todo = List(title=title, content=content, due_date=date,
                         category=Category.objects.get(name=category))
             todo.save()
@@ -34,4 +34,4 @@ def todolist(request):
             for list_id in checked:
                 todo = List.objects.get(id=int(list_id))
                 todo.conclude()
-    return render(request, 'index.html', {'lists' : lists}, {'categories' : categories})
+    return render(request, 'index.html', {"lists": lists, "categories": categories})

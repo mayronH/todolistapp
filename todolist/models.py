@@ -16,7 +16,7 @@ class Category(models.Model):
         return self.name
 
 class List(models.Model):
-    """"To-do List model"""
+    """To-do List model"""
     title = models.CharField(max_length=300)
     content = models.TextField(blank=True)
     created_date = models.DateField(default=timezone.now)
