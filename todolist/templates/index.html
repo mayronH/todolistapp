@@ -62,10 +62,12 @@
                                 <label for="{{ task.id }}">{{ task.title }}</label>
                                 <span class="category"
                                     style="background-color: {{ task.category.color}};">{{ task.category }}</span>
-                                <span class="taskContent">
+                                <div class="taskContent">
+                                    <input type="checkbox" id="expanded{{ task.id }}">
                                     <p>{{task.content}}</p>
-                                </span>
-                                {% if task.is_past_due %} 
+                                    <label for="expanded{{ task.id }}" role="button">mais detalhes</label>
+                                </div>
+                                {% if task.is_past_due %}
                                 <small class="taskDateLate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
                                     {{ task.due_date }}</small>
                                 {% else %}
@@ -92,9 +94,11 @@
                                 <label for="{{ task.id }}">{{ task.title }}</label>
                                 <span class="category"
                                     style="background-color: {{ task.category.color}};">{{ task.category }}</span>
-                                <span class="taskContent">
+                                <div class="taskContent">
+                                    <input type="checkbox" id="expanded{{ task.id }}">
                                     <p>{{task.content}}</p>
-                                </span>
+                                    <label for="expanded{{ task.id }}" role="button">mais detalhes</label>
+                                </div>
                                 <small class="taskDate"><i class="fa fa-calendar"></i> Concluído:
                                     {{ task.done_date }}</small>
                             </div>
