@@ -98,10 +98,9 @@ button {
     box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.75);
 }
 
-[class*='category-'] {
+.category {
     font-size: 10px;
     vertical-align: middle;
-    background-color: #c70d27;
     color: #fff;
     padding: 10px 15px;
     text-align: center;
@@ -116,6 +115,11 @@ button {
     color: #c1c1c1;
 }
 
+.taskDateLate{
+    float: right;
+    color: #c70d27;
+}
+
 .inputcheck {
     margin: auto;
 }
@@ -125,5 +129,10 @@ button {
 }
 
 .concludetask {
+    background-color: #677d65;
+    color: #d6e4cc;
+}
 
+.concludetask label{
+    color: #e1ecd6;
 }

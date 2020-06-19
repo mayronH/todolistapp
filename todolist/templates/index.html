@@ -46,56 +46,64 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-12 todo">
+                    <div class="container">
+                        <h2>A fazer</h2>
+                    </div>
+                    <ul class="tasks">
+                        {% for task in lists %}
+                        <li class="task">
+                            <div class="col-lg-2 col-sm-1 inputcheck">
+                                <input type="checkbox" class="taskCheckbox" name="taskCheckbox" id="{{ task.id }}"
+                                    value="{{ task.id }}">
+                            </div>
+                            <div class="col-lg-10 col-sm-11">
+                                <label for="{{ task.id }}">{{ task.title }}</label>
+                                <span class="category"
+                                    style="background-color: {{ task.category.color}};">{{ task.category }}</span>
+                                <span class="taskContent">
+                                    <p>{{task.content}}</p>
+                                </span>
+                                {% if task.is_past_due %} 
+                                <small class="taskDateLate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
+                                    {{ task.due_date }}</small>
+                                {% else %}
+                                <small class="taskDate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
+                                    {{ task.due_date }}</small>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-6 col-sm-12 conclude">
+                    <div class="container">
+                        <h2>Concluído</h2>
+                    </div>
+                    <ul class="tasks">
+                        {% for task in list_conclude %}
+                        <li class="task concludetask">
+                            <div class="col-lg-2 col-sm-1 inputcheck">
+                                <input type="checkbox" class="taskCheckboxConclude" name="taskCheckboxConclude"
+                                    id="{{ task.id }}" value="{{ task.id }}">
+                            </div>
+                            <div class="col-lg-10 col-sm-11">
+                                <label for="{{ task.id }}">{{ task.title }}</label>
+                                <span class="category"
+                                    style="background-color: {{ task.category.color}};">{{ task.category }}</span>
+                                <span class="taskContent">
+                                    <p>{{task.content}}</p>
+                                </span>
+                                <small class="taskDate"><i class="fa fa-calendar"></i> Concluído:
+                                    {{ task.done_date }}</small>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </form>
-        <div class="row">
-            <div class="col-lg-6 col-sm-12 todo">
-                <div class="container">
-                    <h2>A fazer</h2>
-                </div>
-                <ul class="tasks">
-                    {% for task in lists %}
-                    <li class="task">
-                        <div class="col-lg-2 col-sm-1 inputcheck">
-                            <input type="checkbox" class="taskCheckbox" name="taskCheckbox" id="{{ task.id }}"
-                                value="{{ task.id }}">
-                        </div>
-                        <div class="col-lg-10 col-sm-11">
-                            <label for="{{ task.id }}">{{ task.title }}</label>
-                            <span class="category-{{ task.category }}">{{ task.category }}</span>
-                            <span class="taskContent">
-                                <p>{{task.content}}</p>
-                            </span>
-                            <small class="taskDate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
-                                {{ task.due_date }}</small>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="col-lg-6 col-sm-12 conclude">
-                <div class="container">
-                    <h2>Concluído</h2>
-                </div>
-                <ul class="tasks">
-                    {% for task in list_conclude %}
-                    <li class="task concludetask">
-                        <div class="col-lg-2 inputcheck">
-                            <!-- <input type="checkbox" class="taskCheckbox" name="taskCheckbox" id="{{ task.id }}"
-                                value="{{ task.id }}"> -->
-                        </div>
-                        <div class="col-lg-10">
-                            <label for="{{ task.id }}">{{ task.title }}</label>
-                            <span class="category-{{ task.category }}">{{ task.category }}</span>
-                            <span class="taskContent">
-                                <p>{{task.content}}</p>
-                            </span>
-                            <small class="taskDate"><i class="fa fa-calendar"></i> {{ task.done_date }}</small>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}

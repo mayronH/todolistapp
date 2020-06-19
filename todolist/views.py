@@ -23,17 +23,20 @@ def todolist(request):
             return redirect("/")
 
         if "taskDelete" in request.POST:
-            checked = request.POST.getlist("checktask")
+            checked = []
+            if request.POST.getlist('taskCheckbox'):
+                checked = request.POST.getlist('taskCheckbox')
+            elif request.POST.getlist('taskCheckboxConclude'):
+                checked = request.POST.getlist('taskCheckboxConclude')
 
             for list_id in checked:
                 todo = List.objects.get(id=int(list_id))
                 todo.delete()
 
         if "taskConclude" in request.POST:
-            checked = request.POST.getlist("checktask")
-
+            checked = request.POST.getlist("taskCheckbox")
             for list_id in checked:
                 todo = List.objects.get(id=int(list_id))
                 todo.conclude()
     return render(request, 'index.html', {"list_conclude": list_conclude,
-                                          "categories": categories, "lists": lists})
+                                          "categories": categories, "lists": lists, })

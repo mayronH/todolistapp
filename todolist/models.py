@@ -1,12 +1,14 @@
 """Models"""
 from django.db import models
 from django.utils import timezone
+from datetime import date
 
 # Create your models here.
 
 class Category(models.Model):
     """Categorias para to-do list"""
     name = models.CharField(max_length=100)
+    color = models.CharField(max_length=10, default='#c70d27')
 
     class Meta:
         verbose_name = ("Categoria")
@@ -35,4 +37,8 @@ class List(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def is_past_due(self):
+        return date.today() > self.due_date
         
