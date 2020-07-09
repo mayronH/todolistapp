@@ -1,113 +1,115 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 class="text-center">To-do List</h1>
-<div class="row justify-content-center">
-    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-        <form id="todoform" class="row" action="" method="post">
-            {% csrf_token %}
-            <div class="col-lg-4 col-sm-12">
-                <label for="txtTitle">Título</label>
-                <input type="text" id="txtTitle" placeholder="Insira o título da tarefa" name="txtTitle" required>
-            </div>
-            <div class="col-lg-4 col-sm-12">
-                <label for="optCategory">Categoria</label>
-                <select id="optCategory" name="optCategory">
-                    <option class="disabled" value="">Escolha uma categoria</option>
-                    {% for category in categories %}
-                    <option class="" value="{{ category.name }}" name="{{ category.name }}">{{ category.name }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-lg-4 col-sm-12">
-                <label for="txtDate">Data limite</label>
-                <input type="date" id="txtDate" name="txtDate">
-            </div>
-            <div class="col-lg-12">
-                <label for="txtContent">Descrição</label>
-                <textarea id="txtContent" name="txtContent" rows="5"></textarea>
-            </div>
-            <div class="container">
-                <div class="d-flex justify-content-center">
-                    <div class="p-2">
-                        <button class="taskAdd" id="taskAdd" name="taskAdd" type="submit"><i
-                                class="fas fa-plus icon"></i> Adicionar
-                            Tarefa</button>
-                    </div>
-                    <div class="p-2">
-                        <button class="taskDelete" id="taskDelete" name="taskDelete" formnovalidate="" type="submit"
-                            onclick="$('input#sublist').click();"><i class="far fa-trash-alt icon"></i> Deletar
-                            Tarefa</button>
-                    </div>
-                    <div class="p-2">
-                        <button class="taskConclude" id="taskConclude" name="taskConclude" formnovalidate=""
-                            type="submit" onclick="$('input#sublist').click();"><i class="fas fa-check icon"></i>
-                            Concluir Tarefa</button>
-                    </div>
+<div class="container" id="todo">
+    <h1 class="text-center">To-do List</h1>
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+            <form id="todoform" class="row" action="" method="post">
+                {% csrf_token %}
+                <div class="col-lg-4 col-sm-12">
+                    <label for="txtTitle">Título</label>
+                    <input type="text" id="txtTitle" placeholder="Insira o título da tarefa" name="txtTitle" required>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-sm-12 todo">
-                    <div class="container">
-                        <h2>A fazer</h2>
-                    </div>
-                    <ul class="tasks">
-                        {% for task in lists %}
-                        <li class="task">
-                            <div class="col-lg-2 col-sm-1 inputcheck">
-                                <input type="checkbox" class="taskCheckbox" name="taskCheckbox" id="{{ task.id }}"
-                                    value="{{ task.id }}">
-                            </div>
-                            <div class="col-lg-10 col-sm-11">
-                                <label for="{{ task.id }}">{{ task.title }}</label>
-                                <span class="category"
-                                    style="background-color: {{ task.category.color}};">{{ task.category }}</span>
-                                <div class="taskContent">
-                                    <input type="checkbox" id="expanded{{ task.id }}">
-                                    <p>{{task.content}}</p>
-                                    <label for="expanded{{ task.id }}" role="button">mais detalhes</label>
-                                </div>
-                                {% if task.is_past_due %}
-                                <small class="taskDateLate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
-                                    {{ task.due_date }}</small>
-                                {% else %}
-                                <small class="taskDate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
-                                    {{ task.due_date }}</small>
-                                {% endif %}
-                            </div>
-                        </li>
+                <div class="col-lg-4 col-sm-12">
+                    <label for="optCategory">Categoria</label>
+                    <select id="optCategory" name="optCategory">
+                        <option class="disabled" value="">Escolha uma categoria</option>
+                        {% for category in categories %}
+                        <option class="" value="{{ category.name }}" name="{{ category.name }}">{{ category.name }}
+                        </option>
                         {% endfor %}
-                    </ul>
+                    </select>
                 </div>
-                <div class="col-lg-6 col-sm-12 conclude">
-                    <div class="container">
-                        <h2>Concluído</h2>
+                <div class="col-lg-4 col-sm-12">
+                    <label for="txtDate">Data limite</label>
+                    <input type="date" id="txtDate" name="txtDate">
+                </div>
+                <div class="col-lg-12">
+                    <label for="txtContent">Descrição</label>
+                    <textarea id="txtContent" name="txtContent" rows="5"></textarea>
+                </div>
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <div class="p-2">
+                            <button class="taskAdd" id="taskAdd" name="taskAdd" type="submit"><i
+                                    class="fas fa-plus icon"></i> Adicionar
+                                Tarefa</button>
+                        </div>
+                        <div class="p-2">
+                            <button class="taskDelete" id="taskDelete" name="taskDelete" formnovalidate="" type="submit"
+                                onclick="$('input#sublist').click();"><i class="far fa-trash-alt icon"></i> Deletar
+                                Tarefa</button>
+                        </div>
+                        <div class="p-2">
+                            <button class="taskConclude" id="taskConclude" name="taskConclude" formnovalidate=""
+                                type="submit" onclick="$('input#sublist').click();"><i class="fas fa-check icon"></i>
+                                Concluir Tarefa</button>
+                        </div>
                     </div>
-                    <ul class="tasks">
-                        {% for task in list_conclude %}
-                        <li class="task concludetask">
-                            <div class="col-lg-2 col-sm-1 inputcheck">
-                                <input type="checkbox" class="taskCheckboxConclude" name="taskCheckboxConclude"
-                                    id="{{ task.id }}" value="{{ task.id }}">
-                            </div>
-                            <div class="col-lg-10 col-sm-11">
-                                <label for="{{ task.id }}">{{ task.title }}</label>
-                                <span class="category"
-                                    style="background-color: {{ task.category.color}};">{{ task.category }}</span>
-                                <div class="taskContent">
-                                    <input type="checkbox" id="expanded{{ task.id }}">
-                                    <p>{{task.content}}</p>
-                                    <label for="expanded{{ task.id }}" role="button">mais detalhes</label>
-                                </div>
-                                <small class="taskDate"><i class="fa fa-calendar"></i> Concluído:
-                                    {{ task.done_date }}</small>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
                 </div>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12 todo">
+                        <div class="container">
+                            <h2>A fazer</h2>
+                        </div>
+                        <ul class="tasks">
+                            {% for task in lists %}
+                            <li class="task">
+                                <div class="col-lg-2 col-sm-1 inputcheck">
+                                    <input type="checkbox" class="taskCheckbox" name="taskCheckbox" id="{{ task.id }}"
+                                        value="{{ task.id }}">
+                                </div>
+                                <div class="col-lg-10 col-sm-11">
+                                    <label for="{{ task.id }}">{{ task.title }}</label>
+                                    <span class="category"
+                                        style="background-color: {{ task.category.color}};">{{ task.category }}</span>
+                                    <div class="taskContent">
+                                        <input type="checkbox" id="expanded{{ task.id }}">
+                                        <p>{{task.content}}</p>
+                                        <label for="expanded{{ task.id }}" role="button">mais detalhes</label>
+                                    </div>
+                                    {% if task.is_past_due %}
+                                    <small class="taskDateLate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
+                                        {{ task.due_date }}</small>
+                                    {% else %}
+                                    <small class="taskDate"><i class="fa fa-calendar"></i> {{ task.created_date }} -
+                                        {{ task.due_date }}</small>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 conclude">
+                        <div class="container">
+                            <h2>Concluído</h2>
+                        </div>
+                        <ul class="tasks">
+                            {% for task in list_conclude %}
+                            <li class="task concludetask">
+                                <div class="col-lg-2 col-sm-1 inputcheck">
+                                    <input type="checkbox" class="taskCheckboxConclude" name="taskCheckboxConclude"
+                                        id="{{ task.id }}" value="{{ task.id }}">
+                                </div>
+                                <div class="col-lg-10 col-sm-11">
+                                    <label for="{{ task.id }}">{{ task.title }}</label>
+                                    <span class="category"
+                                        style="background-color: {{ task.category.color}};">{{ task.category }}</span>
+                                    <div class="taskContent">
+                                        <input type="checkbox" id="expanded{{ task.id }}">
+                                        <p>{{task.content}}</p>
+                                        <label for="expanded{{ task.id }}" role="button">mais detalhes</label>
+                                    </div>
+                                    <small class="taskDate"><i class="fa fa-calendar"></i> Concluído:
+                                        {{ task.done_date }}</small>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -1,7 +1,9 @@
 """Views"""
 from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
 from django.utils import timezone
 from .models import Category, List
+from .forms import SingUpForm
 
 # Create your views here.
 
@@ -40,3 +42,20 @@ def todolist(request):
                 todo.conclude()
     return render(request, 'index.html', {"list_conclude": list_conclude,
                                           "categories": categories, "lists": lists, })
+
+def singup(request):
+    """User Sing Up"""
+    if request.method == 'POST':
+        form = SingUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return redirect('login')
+    else:
+        form = SingUpForm()
+    return render(request, 'registration/singup.html', {'form': form})
+        

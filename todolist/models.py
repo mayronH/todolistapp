@@ -44,7 +44,7 @@ class List(models.Model):
     done_date = models.DateField(blank=True, null=True)
     due_date = models.DateField(default=timezone.now)
     category = models.ForeignKey('todolist.Category', on_delete=models.CASCADE, default='general')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = ("Tarefa")

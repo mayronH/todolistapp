@@ -54,6 +54,7 @@ button {
     border: transparent;
     padding: 15px 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, .5);
+    transition-duration: 300ms;
 }
 
 #taskDelete {
@@ -179,6 +180,15 @@ button {
     display: none;
 }
 
+.loginForm {
+    padding: 25px;
+}
+
+.login{
+    width: 100%;
+    background-color: #444b5a;
+}
+
 @media only screen and (max-width: 767px) {
     .task {
         margin-left: 15px;
@@ -187,7 +197,7 @@ button {
 }
 
 @media only screen and (max-width: 375px) {
-    .taskDateLate{
+    .taskDateLate {
         font-size: 11px;
     }
 }

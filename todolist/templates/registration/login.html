@@ -1,0 +1,28 @@
+{% extends "../base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="todo">
+            <div class="row justify-content-center">
+                {% if form.erros %}
+                <div class="alert custom-alert" role="alert">
+                    Login/senha inválidos.
+                </div>
+                {% endif %}
+                <form method="POST" action="{% url 'login' %}" class="loginForm">
+                    {% csrf_token %}
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                    <br><br>
+                    <div class="row justify-content-center p-3">
+                        <button type="submit" class="login">Login</button>
+                    </div>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
