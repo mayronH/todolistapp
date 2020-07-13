@@ -15,11 +15,16 @@
                     {{ form.username }}
                     {{ form.password.label_tag }}
                     {{ form.password }}
+
+                    <input type="hidden" name="next" value="{{ next }}" />
+
                     <br><br>
                     <div class="row justify-content-center p-3">
                         <button type="submit" class="login">Login</button>
                     </div>
-                    <input type="hidden" name="next" value="{{ next }}" />
+                    <div class="row justify-content-center p-3">
+                        <a href="../singup" class="login">Registrar</a>
+                    </div>
                 </form>
             </div>
         </div>
