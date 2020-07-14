@@ -2,6 +2,47 @@ body {
     background-color: #1d1e22;
 }
 
+header {
+    background: #2c2d35;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 5;
+    top: 0;
+    width: 100%;
+    padding: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, .5);
+}
+
+header span {
+    color: #fff;
+    font-size: 32px;
+}
+
+.navbar.navbar-expand-lg.navbar-light {
+    background: #2c2d35;
+    color: #b9b8b8 !important;
+}
+
+.navbar.navbar-expand-lg.navbar-light a {
+    color: #b9b8b8 !important;
+}
+
+.nav-item a{
+    padding-top: 20px;
+}
+
+.profilepic{
+    padding: 0 0 0 15px;
+}
+
+.profilepic img{
+    width: 65px;
+    height: 65px;
+    border-radius: 65px;
+    border: 2px solid #989898;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, .5);
+}
+
 #todo {
     background-color: #2c303a;
     margin-top: 50px;

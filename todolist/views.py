@@ -9,7 +9,10 @@ from .forms import SingUpForm
 
 def index(request):
     """Index"""
-    return render(request, 'index.html')
+    user = request.user
+    return render(request, 'index.html', {
+        "user": user,
+    })
 
 # Create your views here.
 
