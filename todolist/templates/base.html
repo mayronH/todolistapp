@@ -17,10 +17,42 @@
 </head>
 
 <body>
+    <header id="topo" class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="ml-3 logo">
+                <a class="navbar-brand" href="/">
+                    <span>TodoList App</span>
+                </a>
+            </div>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0 mr-3">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'todolist' %}">Tasks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    <li class="nav-item profilepic">
+                        <a href="{% url 'update_profile' %}" class="top-menu">
+                            <img src="{{ user.profile.profile_pic.url }}" class="img-fluid">
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
     <div class="container-fluid">
-        <div class="container" id="todo">
-            {% block content %} {% endblock %}
-        </div>
+        {% block content %} {% endblock %}
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

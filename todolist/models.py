@@ -1,9 +1,33 @@
 """Models"""
-from django.db import models
-from django.utils import timezone
 from datetime import date
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.utils.safestring import mark_safe
+from django.dispatch import receiver
+from django.conf import settings
+from django.db.models.signals import post_save
 
 # Create your models here.
+
+class Profile(models.Model):
+    """Perfil dos usuarios"""
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+    profile_pic = models.ImageField(upload_to='images/', default='images/default.png')
+
+    @receiver(post_save, sender=User)
+    def create_or_update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+        instance.profile.save()
+
+    def thumbnail(self):
+        """Thumbnail for Profile Pic"""
+        return mark_safe('<img src="{url}" height="{height}"'.format(
+            url=self.profile_pic.url,
+            height=150,
+        ))
 
 class Category(models.Model):
     """Categorias para to-do list"""
@@ -25,6 +49,7 @@ class List(models.Model):
     done_date = models.DateField(blank=True, null=True)
     due_date = models.DateField(default=timezone.now)
     category = models.ForeignKey('todolist.Category', on_delete=models.CASCADE, default='general')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
     class Meta:
         verbose_name = ("Tarefa")
@@ -40,5 +65,6 @@ class List(models.Model):
 
     @property
     def is_past_due(self):
+        """Verifica se a data para conclusão é menor que a data atual"""
         return date.today() > self.due_date
         

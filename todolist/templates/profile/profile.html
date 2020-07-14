@@ -1,0 +1,19 @@
+{% extends '../base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" id="todo">
+            <div class="row justify-content-center">
+                <form method="post" enctype="multipart/form-data" class="loginForm">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    {{ profile_form.as_p }}
+                    <div class="row justify-content-center p-3">
+                        <button type="submit" class="login">Salvar mudanças</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
