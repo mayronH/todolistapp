@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Category, List
-from .forms import SingUpForm
+from .forms import SingUpForm, ProfileForm, UserForm
 
 
 def index(request):
@@ -15,6 +15,24 @@ def index(request):
     })
 
 # Create your views here.
+
+@login_required
+def update_profile(request):
+    """Update Profile View"""
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, request.FILES, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect("/todolist")
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'profile/profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    })
 
 
 @login_required
