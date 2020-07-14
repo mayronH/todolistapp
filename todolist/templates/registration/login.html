@@ -16,9 +16,12 @@
                     {{ form.password.label_tag }}
                     {{ form.password }}
 
+                    <div class="reset">
+                        <a href="{% url 'password_reset' %}">Esqueci a minha senha</a>
+                    </div>
+
                     <input type="hidden" name="next" value="{{ next }}" />
 
-                    <br><br>
                     <div class="row justify-content-center p-3">
                         <button type="submit" class="login">Login</button>
                     </div>

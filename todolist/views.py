@@ -6,18 +6,22 @@ from django.utils import timezone
 from .models import Category, List
 from .forms import SingUpForm
 
+
 def index(request):
     """Index"""
     return render(request, 'index.html')
 
 # Create your views here.
+
+
 @login_required
 def todolist(request):
     """TodoList View"""
     user = request.user
-    list_conclude = List.objects.filter(done_date__lte=timezone.now(),
-                                        user=user).order_by('done_date')
-    lists = List.objects.filter(done_date__isnull=True, user=user).order_by('created_date')
+    list_conclude = List.objects.filter(
+        done_date__lte=timezone.now(), user=user).order_by('done_date')
+    lists = List.objects.filter(
+        done_date__isnull=True, user=user).order_by('created_date')
     categories = Category.objects.all()
 
     if request.method == "POST":
@@ -50,6 +54,7 @@ def todolist(request):
     return render(request, 'tasks.html', {"list_conclude": list_conclude,
                                           "categories": categories, "lists": lists, })
 
+
 def singup(request):
     """User Sing Up"""
     if request.method == 'POST':
@@ -65,4 +70,3 @@ def singup(request):
     else:
         form = SingUpForm()
     return render(request, 'registration/singup.html', {'form': form})
-        

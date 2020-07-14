@@ -48,7 +48,8 @@ select option {
     border-color: #444857;
 }
 
-button, .login {
+button,
+.login {
     background: none;
     text-align: center;
     color: #fff;
@@ -185,14 +186,35 @@ button, .login {
     padding: 25px;
 }
 
-.login{
+.loginForm label {
+    padding-top: 5px;
+}
+
+.login {
     width: 100%;
     background-color: #444b5a;
 }
 
-.login:hover{
+.login:hover {
     color: #fff;
     text-decoration: none;
+}
+
+.reset {
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+
+.reset a,
+.reset a:hover,
+.loginForm li {
+    color: #5e6677;
+}
+
+.mensagem-email {
+    padding: 30px 25px;
+    color: #fff;
+    font-size: 18px;
 }
 
 @media only screen and (max-width: 767px) {
