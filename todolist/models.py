@@ -3,6 +3,7 @@ from datetime import date
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from django.dispatch import receiver
 from django.conf import settings
 from django.db.models.signals import post_save
@@ -16,13 +17,17 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to='images/', default='images/default.png')
 
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_or_update_user_profile(sender, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, created, **kwargs):
         instance.profile.save()
+
+    def thumbnail(self):
+        """Thumbnail for Profile Pic"""
+        return mark_safe('<img src="{url}" height="{height}"'.format(
+            url=self.profile_pic.url,
+            height=150,
+        ))
 
 class Category(models.Model):
     """Categorias para to-do list"""
