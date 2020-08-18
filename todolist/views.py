@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Category, List
-from .forms import SingUpForm, ProfileForm, UserForm
+from .forms import SignUpForm, ProfileForm, UserForm
 
 
 def index(request):
@@ -76,10 +76,10 @@ def todolist(request):
                                           "categories": categories, "lists": lists, })
 
 
-def singup(request):
-    """User Sing Up"""
+def signup(request):
+    """User Sign Up"""
     if request.method == 'POST':
-        form = SingUpForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
@@ -89,5 +89,5 @@ def singup(request):
             login(request, user)
             return redirect('login')
     else:
-        form = SingUpForm()
-    return render(request, 'registration/singup.html', {'form': form})
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})

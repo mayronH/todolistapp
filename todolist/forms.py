@@ -4,8 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
 
-class SingUpForm(UserCreationForm):
-    """Singup Form"""
+class SignUpForm(UserCreationForm):
+    """Signup Form"""
     email = forms.EmailField(max_length=254)
 
     class Meta:
